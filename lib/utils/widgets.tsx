@@ -11,6 +11,9 @@ import {
   FlexConfig,
   Direction,
   FlexDirection,
+  Wrap,
+  Justify,
+  Align,
 } from "doric";
 import { BaseProps } from "./types";
 
@@ -258,9 +261,100 @@ function preDealProps<T extends View, P extends BaseProps>(
           break;
       }
 
+      switch (style["flex-wrap"]) {
+        case "nowrap":
+          flexConfig.flexWrap = Wrap.NO_WRAP;
+          break;
+        case "wrap":
+          flexConfig.flexWrap = Wrap.WRAP;
+          break;
+        case "wrap-reverse":
+          flexConfig.flexWrap = Wrap.WRAP_REVERSE;
+          break;
+      }
+
+      switch (style["justify-content"]) {
+        case "flex-start":
+          flexConfig.justifyContent = Justify.FLEX_START;
+          break;
+        case "flex-end":
+          flexConfig.justifyContent = Justify.FLEX_END;
+          break;
+        case "center":
+          flexConfig.justifyContent = Justify.CENTER;
+          break;
+        case "space-between":
+          flexConfig.justifyContent = Justify.SPACE_BETWEEN;
+          break;
+        case "space-around":
+          flexConfig.justifyContent = Justify.SPACE_AROUND;
+          break;
+        case "space-evently":
+          flexConfig.justifyContent = Justify.SPACE_EVENLY;
+          break;
+      }
+
+      switch (style["align-items"]) {
+        case "stretch":
+          flexConfig.alignItems = Align.STRETCH;
+          break;
+        case "flex-start":
+          flexConfig.alignItems = Align.FLEX_START;
+          break;
+        case "flex-end":
+          flexConfig.alignItems = Align.FLEX_END;
+          break;
+        case "center":
+          flexConfig.alignItems = Align.CENTER;
+          break;
+        case "stretch":
+          flexConfig.alignItems = Align.STRETCH;
+          break;
+        case "baseline":
+          flexConfig.alignItems = Align.BASELINE;
+          break;
+        case "space-around":
+          flexConfig.alignItems = Align.SPACE_AROUND;
+          break;
+        case "space-between":
+          flexConfig.alignItems = Align.SPACE_BETWEEN;
+          break;
+      }
+
+      if (style["flex"]) {
+        flexConfig.flex = parseInt(style["flex"]);
+      }
+
       viewProps.flexConfig = flexConfig;
     }
 
+    if (style.position === "relative") {
+      if (style.top) {
+        viewProps.translationY = pixelString2Number(style.top);
+      }
+      if (style.bottom) {
+        viewProps.translationY = -pixelString2Number(style.bottom);
+      }
+      if (style.left) {
+        viewProps.translationX = pixelString2Number(style.left);
+      }
+      if (style.right) {
+        viewProps.translationX = -pixelString2Number(style.right);
+      }
+    } else if (style.position === "absolute") {
+      if (style.top) {
+        viewProps.top = pixelString2Number(style.top);
+      }
+      if (style.bottom) {
+        viewProps.bottom = pixelString2Number(style.bottom);
+      }
+      if (style.left) {
+        viewProps.left = pixelString2Number(style.left);
+      }
+      if (style.right) {
+        viewProps.right = pixelString2Number(style.right);
+      }
+    }
     viewProps.layoutConfig = config;
   }
   return viewProps;
