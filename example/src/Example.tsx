@@ -10,6 +10,8 @@ import {
   modal,
   AssetsResource,
   image,
+  jsx,
+  VLayout,
 } from "doric";
 import { demoPlugin } from "doric-vue-runtime";
 
@@ -19,6 +21,7 @@ class Example extends Panel {
     navbar(context).setTitle("Example");
   }
   build(rootView: Group) {
+    <VLayout></VLayout>;
     vlayout([
       image({
         image: new AssetsResource("logo_doric.png"),
