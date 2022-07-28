@@ -1,7 +1,7 @@
 import { View } from "doric";
 
 export type BaseProps = {
-  innerElement: any;
+  innerElement?: any;
   tap?: Function;
   bounds?: any;
   declaredStyle?: Record<string, string>;

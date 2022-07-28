@@ -14,18 +14,32 @@ import {
   Wrap,
   Justify,
   Align,
+  HLayout,
+  Stack,
 } from "doric";
 import { BaseProps } from "./types";
 
 export type DivProps = BaseProps;
 
+export type UlProps = BaseProps;
+
+export type LiProps = BaseProps;
+
 export type HProps = BaseProps;
 
-export type ImgProps = { src?: string } & BaseProps;
+export type ImgProps = {
+  src: string;
+} & BaseProps;
 
 export type HrefProps = {
   href: string;
 } & BaseProps;
+
+export type AstTextProps = {
+  text: string;
+} & BaseProps;
+
+export type BrProps = BaseProps;
 
 export function pixelString2Number(v: string) {
   return parseFloat(v.substring(0, v.indexOf("px")));
@@ -360,11 +374,11 @@ function preDealProps<T extends View, P extends BaseProps>(
   return viewProps;
 }
 
-export function vdiv(props: DivProps) {
+export function Vdiv(props: DivProps) {
   return <VLayout props={preDealProps(props)} space={5}></VLayout>;
 }
 
-export function vh1(props: HProps) {
+export function Vh1(props: HProps) {
   return (
     <Text
       props={preDealProps(props, (e, target) => {
@@ -379,7 +393,7 @@ export function vh1(props: HProps) {
   );
 }
 
-export function vh2(props: HProps) {
+export function Vh2(props: HProps) {
   return (
     <Text
       props={preDealProps(props, (e, target) => {
@@ -394,7 +408,7 @@ export function vh2(props: HProps) {
   );
 }
 
-export function vh3(props: HProps) {
+export function Vh3(props: HProps) {
   return (
     <Text
       textSize={14}
@@ -409,7 +423,7 @@ export function vh3(props: HProps) {
   );
 }
 
-export function vimg(props: ImgProps) {
+export function Vimg(props: ImgProps) {
   return (
     <Image
       props={preDealProps(props, (e, target) => {
@@ -421,7 +435,7 @@ export function vimg(props: ImgProps) {
   );
 }
 
-export function va(props: HrefProps) {
+export function Va(props: HrefProps) {
   return (
     <Text
       textSize={12}
@@ -435,6 +449,38 @@ export function va(props: HrefProps) {
           const text = e.innerElement as Text;
           target.text = text.text;
         }
+      })}
+    ></Text>
+  );
+}
+
+export function Vul(props: BaseProps) {
+  return <HLayout props={preDealProps(props)}></HLayout>;
+}
+
+export function Vli(props: BaseProps) {
+  return <Stack props={preDealProps(props)}></Stack>;
+}
+
+export function Vbr(props: BaseProps) {
+  return <Stack props={preDealProps(props)}></Stack>;
+}
+
+export function Vasttext(props: AstTextProps) {
+  return (
+    <Text
+      props={preDealProps(props, (e, target) => {
+        target.text = props.text;
+      })}
+    ></Text>
+  );
+}
+
+export function Vastexpression(props: AstTextProps) {
+  return (
+    <Text
+      props={preDealProps(props, (e, target) => {
+        target.text = props.text;
       })}
     ></Text>
   );
