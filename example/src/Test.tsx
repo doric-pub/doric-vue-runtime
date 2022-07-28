@@ -7,7 +7,7 @@ export function Test(prop: { data: any, methods: any }) {
     <Vview>
       <Vview
         tap={() => {
-          Reflect.apply(click, prop.data, [])
+          Reflect.apply(click, prop.data, []);
         }}
         declaredStyle={{ "background-color": "#f0cc00" }}
       >
