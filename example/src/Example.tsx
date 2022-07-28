@@ -7,7 +7,7 @@ import { observable } from "mobx";
 @Entry
 class Example extends Panel {
   onCreate() {
-    openDConsole(context);
+    openDConsole(this.context);
   }
   onShow() {
     navbar(context).setTitle("Example");

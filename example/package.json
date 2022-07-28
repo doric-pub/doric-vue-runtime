@@ -12,7 +12,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "doric-console": "0.1.4",
+    "doric-console": "0.1.5",
     "doric-vue-runtime": "file:../",
     "mobx-doric": "^0.1.4",
     "rollup": "^2.24.0",
