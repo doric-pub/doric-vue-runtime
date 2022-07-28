@@ -87,13 +87,11 @@ function preDealProps<T extends View, P extends BaseProps>(
   }
   if (props.tap) {
     const tap = props.tap;
-    viewProps.onClick = () => {
-      Reflect.apply(tap, props.bounds, []);
-    };
+    viewProps.onClick = tap;
   }
   if (props.staticStyle || props.declaredStyle) {
     const style = { ...props.staticStyle, ...props.declaredStyle };
-    const config = layoutConfig();
+    const config = layoutConfig().fit();
     if (style.width) {
       viewProps.width = pixelString2Number(style.width);
       config.widthSpec = LayoutSpec.JUST;
@@ -375,7 +373,12 @@ function preDealProps<T extends View, P extends BaseProps>(
         viewProps.right = pixelString2Number(style.right);
       }
     }
+
     viewProps.layoutConfig = config;
+
+    if (style["background-color"]) {
+      viewProps.backgroundColor = Color.parse(style["background-color"]);
+    }
   }
   return viewProps;
 }
@@ -385,7 +388,16 @@ export function Vdiv(props: DivProps) {
 }
 
 export function Vview(props: ViewProps) {
-  return <VLayout props={preDealProps(props)} space={5}></VLayout>;
+  return (
+    <VLayout
+      props={preDealProps(props, (e, target) => {
+        if (e.innerElement) {
+          target.innerElement = e.innerElement;
+        }
+      })}
+      space={5}
+    ></VLayout>
+  );
 }
 
 export function Vh1(props: HProps) {
@@ -490,7 +502,10 @@ export function Vtext(props: TextProps) {
   return (
     <Text
       props={preDealProps(props, (e, target) => {
-        target.text = props.text;
+        if (e.innerElement && e.innerElement instanceof Text) {
+          const text = e.innerElement as Text;
+          target.text = text.text;
+        }
       })}
     ></Text>
   );

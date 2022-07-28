@@ -6,7 +6,9 @@ export function Test(prop: { data: any, methods: any }) {
   return (
     <Vview>
       <Vview
-        tap={Reflect.apply(click, prop.data, [])}
+        tap={() => {
+          Reflect.apply(click, prop.data, [])
+        }}
         declaredStyle={{ "background-color": "#f0cc00" }}
       >
         <Vtext staticStyle={{ color: "green", "font-size": "50px" }}>
