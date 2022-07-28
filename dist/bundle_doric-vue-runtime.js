@@ -315,7 +315,7 @@ function preDealProps(props, fn) {
         }
         viewProps.layoutConfig = config;
         if (style["background-color"]) {
-            viewProps.backgroundColor = doric.Color.parse(style["background-color"]);
+            viewProps.backgroundColor = string2Color(style["background-color"]);
         }
     }
     return viewProps;
@@ -390,6 +390,15 @@ function Vtext(props) {
             if (e.innerElement && e.innerElement instanceof doric.Text) {
                 const text = e.innerElement;
                 target.text = text.text;
+            }
+            if (props.staticStyle || props.declaredStyle) {
+                const style = Object.assign(Object.assign({}, props.staticStyle), props.declaredStyle);
+                if (style.color) {
+                    target.textColor = string2Color(style.color);
+                }
+                if (style["font-size"]) {
+                    target.textSize = pixelString2Number(style["font-size"]);
+                }
             }
         }) }));
 }
