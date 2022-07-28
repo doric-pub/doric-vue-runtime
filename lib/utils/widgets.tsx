@@ -21,6 +21,8 @@ import { BaseProps } from "./types";
 
 export type DivProps = BaseProps;
 
+export type ViewProps = BaseProps;
+
 export type UlProps = BaseProps;
 
 export type LiProps = BaseProps;
@@ -37,6 +39,10 @@ export type HrefProps = {
 
 export type AstTextProps = {
   text: string;
+} & BaseProps;
+
+export type TextProps = {
+  text?: string;
 } & BaseProps;
 
 export type BrProps = BaseProps;
@@ -378,6 +384,10 @@ export function Vdiv(props: DivProps) {
   return <VLayout props={preDealProps(props)} space={5}></VLayout>;
 }
 
+export function Vview(props: ViewProps) {
+  return <VLayout props={preDealProps(props)} space={5}></VLayout>;
+}
+
 export function Vh1(props: HProps) {
   return (
     <Text
@@ -467,6 +477,16 @@ export function Vbr(props: BaseProps) {
 }
 
 export function Vasttext(props: AstTextProps) {
+  return (
+    <Text
+      props={preDealProps(props, (e, target) => {
+        target.text = props.text;
+      })}
+    ></Text>
+  );
+}
+
+export function Vtext(props: TextProps) {
   return (
     <Text
       props={preDealProps(props, (e, target) => {
