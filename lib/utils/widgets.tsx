@@ -377,7 +377,7 @@ function preDealProps<T extends View, P extends BaseProps>(
     viewProps.layoutConfig = config;
 
     if (style["background-color"]) {
-      viewProps.backgroundColor = Color.parse(style["background-color"]);
+      viewProps.backgroundColor = string2Color(style["background-color"]);
     }
   }
   return viewProps;
@@ -505,6 +505,15 @@ export function Vtext(props: TextProps) {
         if (e.innerElement && e.innerElement instanceof Text) {
           const text = e.innerElement as Text;
           target.text = text.text;
+        }
+        if (props.staticStyle || props.declaredStyle) {
+          const style = { ...props.staticStyle, ...props.declaredStyle };
+          if (style.color) {
+            target.textColor = string2Color(style.color);
+          }
+          if (style["font-size"]) {
+            target.textSize = pixelString2Number(style["font-size"]);
+          }
         }
       })}
     ></Text>
