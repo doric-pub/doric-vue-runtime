@@ -1,8 +1,26 @@
 import { jsx } from "doric";
 import { Vastexpression, Vtext, Vview, Vasttext } from "doric-vue-runtime";
-export function Test(prop: { data: any, methods: any }) {
-  var { a, list } = prop.data;
-  var { click } = prop.methods;
+function genStyle(
+  style: Record<string, any>,
+  classSelector: Record<string, boolean>
+) {
+  let result: Record<string, string> = {};
+  Object.keys(classSelector).forEach((selector) => {
+    if (
+      Object.keys(style).includes("." + selector) &&
+      classSelector[selector]
+    ) {
+      Object.keys(style["." + selector]).forEach((key) => {
+        result[key] = style["." + selector][key];
+      });
+    }
+  });
+  return result;
+}
+export function Test(prop: { data: any, methods: any, style: any }) {
+  var { a, list, isActive, isError } = prop.data;
+  var { click, change } = prop.methods;
+  var style = prop.style;
   return (
     <Vview>
       <Vview
@@ -15,6 +33,13 @@ export function Test(prop: { data: any, methods: any }) {
           <Vastexpression text={!a ? "打开" : "关闭"}></Vastexpression>
         </Vtext>
       </Vview>
+      <Vasttext text={" "}></Vasttext>
+      <Vview
+        tap={() => {
+          Reflect.apply(change, prop.data, []);
+        }}
+        declaredStyle={genStyle(style, { active: isActive, error: isError })}
+      ></Vview>
       <Vasttext text={" "}></Vasttext>
       {a ? (
         <Vview>

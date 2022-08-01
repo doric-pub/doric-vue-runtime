@@ -1,7 +1,8 @@
 import { Panel, Group, navbar, jsx, Stack, loge } from "doric";
 import { openDConsole } from "doric-console";
 import { Test } from "./Test";
-import prop from "./TestProps";
+import prop from "./TestProp";
+import style from "./TestStyle";
 import { observer } from "mobx-doric";
 import { observable } from "mobx";
 @Entry
@@ -17,7 +18,9 @@ class Example extends Panel {
     <Stack parent={rootView}>
       {observer(() => {
         loge(observedData);
-        return <Test data={observedData} methods={prop.methods} />;
+        return (
+          <Test data={observedData} methods={prop.methods} style={style} />
+        );
       })}
     </Stack>;
   }
